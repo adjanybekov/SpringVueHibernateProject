@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>    
+    <img src="./assets/logo.png">    
+    <h2>Enter Person</h2>    
       First name: <input v-model="firstName" placeholder="firstName"> <br><br>
       Last  name: <input v-model="lastName" placeholder="lastName">   <br><br>
-      Course: <input v-model="course" placeholder="course"> <br><br>
+      <!-- Course: <input v-model="course" placeholder="course"> <br><br> -->
       Age: <input v-model="age" placeholder="Age">  <br><br>          
     <button v-on:click="saveStudent">
       SaveStudent
@@ -20,19 +19,52 @@
 
     <button v-on:click="getStudents">
       getStudents
-    </button>
-
+    </button><br><br>
+    <!-- {{ studentData }} -->
+    <ul>
+      <li v-for="student in studentData" >
+        {{  student }}
+      </li>      
+    </ul>
+ <!--
     <h1>  
-      Delete Student
+      Write StudentId to Delete:
     </h1>
     <input v-model="studentId" placeholder="studetId"> <br><br>
         <button v-on:click="deleteStudent">
       deleteStudent
     </button>
+    <br><br>
+    <h2>Update Student</h2>    
+      Id:     <input v-model="studentId" placeholder="firstName"> <br><br>
+      First name: <input v-model="firstName" placeholder="firstName"> <br><br>
+      Last  name: <input v-model="lastName" placeholder="lastName">   <br><br>
+      Course: <input v-model="course" placeholder="course"> <br><br>
+      Age: <input v-model="age" placeholder="Age">  <br><br>          
+    <button v-on:click="updateStudent">
+      UpdateStudent
+    </button> -->
 
-    <p>
-      {{ studentData }}
-    </p>
+    <template>
+      <h2>Enter Topic</h2>    
+      Id:     <input v-model="topicId" placeholder="topicId"> <br><br>
+      Title: <input v-model="title" placeholder="title"> <br><br>      
+      PersonId: <input v-model="personId" placeholder="personId"> <br><br>      
+      <button v-on:click="updateStudent">
+        Save Topic
+      </button>
+    </template>
+
+    <template>
+      <h2>Enter Comment</h2>    
+      Id:     <input v-model="commentId" placeholder="commentId"> <br><br>
+      Comment: <input v-model="comment" placeholder="comment"> <br><br>      
+      PersonId: <input v-model="personId" placeholder="personId"> <br><br>      
+      TopicId: <input v-model="topicId" placeholder="topicId"> <br><br>      
+      <button v-on:click="updateStudent">
+        Save comment
+      </button>
+    </template>
   </div>
 </template>
 
@@ -47,7 +79,13 @@ export default {
       firstName:'',
       lastName:'',
       course:'',
-      age:''
+      age:'',
+      studentId:'',
+      topicId:'',
+      commentId:'',
+      title:'',
+      comment:'',
+      personId:''
     }
   },
   created: function(){
@@ -70,7 +108,7 @@ export default {
       axios.get('http://localhost:8090/api/v1/students')
       .then(function(response){
         debugger
-        vm.studentData = response.data[0];
+        vm.studentData = response.data;
 
       })
       .catch(function(error){
@@ -106,7 +144,37 @@ export default {
       //   debugger
       //   console.log(error);
       // });
+  },
+  deleteStudent:function(){
+    var vm = this;
+    axios.delete('http://localhost:8090/api/v1/students/' + this.studentId)
+    .then(function(response){
+      console.log(response);
+      vm.getStudents();
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+  },
+  updateStudent:function(){
+    var vm = this;
+    axios.put('http://localhost:8090/api/v1/students/',
+    {
+          id:vm.studentId,
+          firstName: vm.firstName,
+          lastName: vm.lastName,
+          course: vm.course,
+          age: vm.age
+    })
+    .then(function(response){
+      console.log(response);
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+
   }
+
 
 }
 }
@@ -137,6 +205,6 @@ li {
 }
 
 a {
-  color: #42b983;
+  color: #458f6e;
 }
 </style>
