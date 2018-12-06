@@ -1,30 +1,35 @@
 package com.example.demo2.service;
 
-import com.example.demo2.dao.PersonDao;
+import com.example.demo2.PersonRepository;
+import com.example.demo2.TopicRepository;
 import com.example.demo2.model.Person;
+import com.example.demo2.model.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PersonService {
-    private final PersonDao personDao;
+    private final PersonRepository personDao;
+    private final TopicRepository topicRepository;
 
     @Autowired
-    public PersonService(@Qualifier("dao") PersonDao personDao) {
+    public PersonService( PersonRepository personDao,  TopicRepository topicRepository) {
         this.personDao = personDao;
+        this.topicRepository  = topicRepository;
     }
 
-    public int insertPerson(Person person){
-        return personDao.insertPerson(person);
+    public Person insertPerson(Person person){
+        return personDao.save(person);
     }
-    public List<Person> getAllPersons(){
-        return personDao.getAllPersons();
+    public Iterable<Person> getAllPersons(){
+        return personDao.findAll();
     }
 //    int updatePerson(Person person);
 //    Person getPersonById(Person person);
 //    List<Person> getAllPersons(Person person);
 //    int deletePersonById(UUID id);
+
+    public Topic insertTopic(Topic t) {
+        return topicRepository.save(t);
+    }
 }

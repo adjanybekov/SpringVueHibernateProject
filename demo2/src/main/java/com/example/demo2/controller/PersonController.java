@@ -1,13 +1,13 @@
 package com.example.demo2.controller;
 
+import com.example.demo2.TopicRepository;
+import com.example.demo2.dto.CreateTopicDTO;
 import com.example.demo2.model.Person;
+import com.example.demo2.model.Topic;
 import com.example.demo2.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,10 +15,12 @@ import java.util.List;
 @RequestMapping("api/persons/v1")
 public class PersonController {
     private final PersonService personService;
+    private final TopicRepository topicRepository;
 
     @Autowired
-    public PersonController(PersonService personService) {
+    public PersonController(PersonService personService, TopicRepository topicRepository) {
         this.personService = personService;
+        this.topicRepository = topicRepository;
     }
 
     @RequestMapping(
@@ -33,9 +35,13 @@ public class PersonController {
             produces= MediaType.APPLICATION_JSON_VALUE,
             method = RequestMethod.GET
     )
-    public List<Person> getAllPersons(){
+    public Iterable<Person> getAllPersons(){
         return personService.getAllPersons();
     }
 
-
+    @PostMapping
+    public void createTopic(CreateTopicDTO topicDTO) {
+        Topic t = new Topic();
+        topicRepository.save(t);
+    }
 }

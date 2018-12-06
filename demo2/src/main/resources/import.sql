@@ -1,0 +1,1 @@
+insert into person(id,first_name,last_name,age) values(1001,"Azatik","Can",22);
