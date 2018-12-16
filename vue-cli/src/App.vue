@@ -1,70 +1,24 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">    
-    <h2>Enter Person</h2>    
-      First name: <input v-model="firstName" placeholder="firstName"> <br><br>
-      Last  name: <input v-model="lastName" placeholder="lastName">   <br><br>
-      <!-- Course: <input v-model="course" placeholder="course"> <br><br> -->
-      Age: <input v-model="age" placeholder="Age">  <br><br>          
-    <button v-on:click="saveStudent">
-      SaveStudent
-    </button>
-    <button v-on:click="loadQuote">
-      changeQuote
-      </button>
+     
+    <div class="container">
+        <div class="row">
+          <button>
+            Add new Topic
+          </button>
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">    
+              <p> Hottest Topics of the day</p>
+              <ul>
+                <li v-for="(t,i) in topics" @click="loadPageWithComments(i)" class="list-group-item list-group-item-action">  {{i}}) {{ t[1] }} </li>
+              </ul>
 
-    <p>
-      {{ status }}
-    </p>
-
-    <button v-on:click="getStudents">
-      getStudents
-    </button><br><br>
-    <!-- {{ studentData }} -->
-    <ul>
-      <li v-for="student in studentData" >
-        {{  student }}
-      </li>      
-    </ul>
- <!--
-    <h1>  
-      Write StudentId to Delete:
-    </h1>
-    <input v-model="studentId" placeholder="studetId"> <br><br>
-        <button v-on:click="deleteStudent">
-      deleteStudent
-    </button>
-    <br><br>
-    <h2>Update Student</h2>    
-      Id:     <input v-model="studentId" placeholder="firstName"> <br><br>
-      First name: <input v-model="firstName" placeholder="firstName"> <br><br>
-      Last  name: <input v-model="lastName" placeholder="lastName">   <br><br>
-      Course: <input v-model="course" placeholder="course"> <br><br>
-      Age: <input v-model="age" placeholder="Age">  <br><br>          
-    <button v-on:click="updateStudent">
-      UpdateStudent
-    </button> -->
-
-    <template>
-      <h2>Enter Topic</h2>    
-      Id:     <input v-model="topicId" placeholder="topicId"> <br><br>
-      Title: <input v-model="title" placeholder="title"> <br><br>      
-      PersonId: <input v-model="personId" placeholder="personId"> <br><br>      
-      <button v-on:click="updateStudent">
-        Save Topic
-      </button>
-    </template>
-
-    <template>
-      <h2>Enter Comment</h2>    
-      Id:     <input v-model="commentId" placeholder="commentId"> <br><br>
-      Comment: <input v-model="comment" placeholder="comment"> <br><br>      
-      PersonId: <input v-model="personId" placeholder="personId"> <br><br>      
-      TopicId: <input v-model="topicId" placeholder="topicId"> <br><br>      
-      <button v-on:click="updateStudent">
-        Save comment
-      </button>
-    </template>
+              <ul>
+              
+              </ul>
+      </div>     
+      </div>     
+      </div>     
+       
   </div>
 </template>
 
@@ -73,6 +27,8 @@ export default {
   name: 'app',
   data () {
     return {
+      topics:[],
+      comments:[],
       msg: 'Welcome to Your Vue.js App',
       status:'',
       studentData:'',
@@ -89,7 +45,9 @@ export default {
     }
   },
   created: function(){
-    this.loadQuote(); 
+    // this.loadQuote(); 
+    this.getTopics();
+    
   },
   methods:{
     loadQuote:function(){
@@ -107,18 +65,18 @@ export default {
       var vm = this;       
       axios.get('http://localhost:8090/api/v1/students')
       .then(function(response){
-        debugger
-        vm.studentData = response.data;
+        
+        vm.studentData = response.data[0];
 
       })
       .catch(function(error){
-        debugger
+        
         vm.studentData='Error.. = ' + error;
       })
   },
   saveStudent:function(){
       var vm = this;
-      debugger
+      
 
       axios({
         url: 'http://localhost:8090/api/v1/students',
@@ -137,42 +95,43 @@ export default {
       //   age: vm.age
       // })
       // .then(function (response) {
-      //   debugger
+      //   
       //   console.log(response);
       // })
       // .catch(function (error) {
-      //   debugger
+      //   
       //   console.log(error);
       // });
   },
-  deleteStudent:function(){
+  getTopics(){
+
     var vm = this;
-    axios.delete('http://localhost:8090/api/v1/students/' + this.studentId)
+    axios.get('http://localhost:8087/api/topics/v1',{crossdomain: true} )
     .then(function(response){
-      console.log(response);
-      vm.getStudents();
-    })
-    .catch(function(error){
-      console.log(error);
+
+      vm.topics = response.data;
+    }).catch( error =>{
+      
+        console.log('Errrrror:   '+error)
     })
   },
-  updateStudent:function(){
+
+  loadPageWithComments(index){
     var vm = this;
-    axios.put('http://localhost:8090/api/v1/students/',
-    {
-          id:vm.studentId,
-          firstName: vm.firstName,
-          lastName: vm.lastName,
-          course: vm.course,
-          age: vm.age
-    })
+
+    axios.get('http://localhost:8087/api/topics/v1/'+vm.topics[index][0])
     .then(function(response){
-      console.log(response);
-    })
-    .catch(function(error){
-      console.log(error);
+
+      vm.comments = response.data;
+
+      alert(vm.comments);
+      console.log(vm.comments);
+    }).catch( error =>{
+      
+        console.log('Errrrror:   '+error)
     })
 
+    
   }
 
 
@@ -200,11 +159,33 @@ ul {
 }
 
 li {
-  display: inline-block;
+  /* display: inline-block; */
   margin: 0 10px;
 }
 
 a {
   color: #458f6e;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 12px
+}
+
+.list-group-item {
+  display: block;
+  text-decoration: none;
+  margin: 1em 0.2em;
+  color: #4a4a4a;
+}
+
+.list-group-item:hover {
+  color: red;
+}
+
+.highlight {
+  color: blue;
 }
 </style>

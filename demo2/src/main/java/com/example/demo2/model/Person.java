@@ -2,10 +2,8 @@ package com.example.demo2.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,6 +14,13 @@ public class Person {
     private String firstName;
     private String lastName;
     private int age;
+
+    @OneToMany
+    private List<Topic> topics;
+
+    @OneToMany
+    private List<Comment> comments;
+
 
     public Person() {
     }
@@ -60,4 +65,19 @@ public class Person {
         this.age = age;
     }
 
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }
