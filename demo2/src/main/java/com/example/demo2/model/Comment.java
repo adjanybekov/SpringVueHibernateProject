@@ -8,10 +8,12 @@ public class Comment {
     @Id
     @GeneratedValue
     private int id;
+
     private String comment;
-    @OneToOne
+
+    @ManyToOne
     private Person person;
-    @OneToOne
+    @ManyToOne
     private Topic topic;
 
     public Comment() {

@@ -15,7 +15,7 @@ public class Topic {
     @OneToOne
     private Person person;
 
-    @OneToMany
+    @OneToMany(mappedBy = "topic")
     private List<Comment> comments;
 
     public Topic() {

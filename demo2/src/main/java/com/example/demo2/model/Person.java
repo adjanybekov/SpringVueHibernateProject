@@ -15,10 +15,10 @@ public class Person {
     private String lastName;
     private int age;
 
-    @OneToMany
+    @OneToMany(mappedBy = "person")
     private List<Topic> topics;
 
-    @OneToMany
+    @OneToMany(mappedBy = "person")
     private List<Comment> comments;
 
 
