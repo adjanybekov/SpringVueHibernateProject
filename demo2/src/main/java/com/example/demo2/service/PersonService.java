@@ -5,6 +5,7 @@ import com.example.demo2.TopicRepository;
 import com.example.demo2.model.Person;
 import com.example.demo2.model.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,22 +1,29 @@
 <template>
+
   <div id="app">
      
     <div class="container">
-        <div class="row">
-          <button>
-            Add new Topic
-          </button>
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">    
-              <p> Hottest Topics of the day</p>
-              <ul>
-                <li v-for="(t,i) in topics" @click="loadPageWithComments(i)" class="list-group-item list-group-item-action">  {{i}}) {{ t[1] }} </li>
-              </ul>
-
-              <ul>
-              
-              </ul>
-      </div>     
-      </div>     
+        <div class="row marginstyle" >          
+          <div class="col-md-3">
+            <router-link to='/' class="navbar-brand" :active='true'>
+                        Home
+                      </router-link>
+          </div>
+         <div class="col-md-2">
+            <button class="btn btn-primary" @click="addTopic">
+              Add new Topic
+            </button>
+         </div>
+          
+          <!-- <div class="col-md-2">
+             <button class="btn btn-primary" @click="loadTopics">
+              List Fresh Topics
+            </button>
+          </div> -->
+        
+             
+      </div> 
+                <router-view></router-view>    
       </div>     
        
   </div>
@@ -27,115 +34,18 @@ export default {
   name: 'app',
   data () {
     return {
-      topics:[],
-      comments:[],
-      msg: 'Welcome to Your Vue.js App',
-      status:'',
-      studentData:'',
-      firstName:'',
-      lastName:'',
-      course:'',
-      age:'',
-      studentId:'',
-      topicId:'',
-      commentId:'',
-      title:'',
-      comment:'',
-      personId:''
+
     }
   },
-  created: function(){
-    // this.loadQuote(); 
-    this.getTopics();
-    
-  },
   methods:{
-    loadQuote:function(){
-      this.status="Loading...";
-      var vm = this;      
-      axios.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes')
-      .then(function(response){
-        vm.status = response.data[0];        
-      })
-      .catch(function(error){
-        vm.status='Error.. = ' + error;
-      })
-    },
-    getStudents:function(){       
-      var vm = this;       
-      axios.get('http://localhost:8090/api/v1/students')
-      .then(function(response){
-        
-        vm.studentData = response.data[0];
-
-      })
-      .catch(function(error){
-        
-        vm.studentData='Error.. = ' + error;
-      })
-  },
-  saveStudent:function(){
-      var vm = this;
-      
-
-      axios({
-        url: 'http://localhost:8090/api/v1/students',
-        method: 'post',
-        data: {
-          firstName: vm.firstName,
-          lastName: vm.lastName,
-          course: vm.course,
-          age: vm.age
-        }
-      })
-      // axios.post('http://localhost:8090/api/v1/students', {
-      //   firstName: vm.firstName,
-      //   lastName: vm.lastName,
-      //   course: vm.course,
-      //   age: vm.age
-      // })
-      // .then(function (response) {
-      //   
-      //   console.log(response);
-      // })
-      // .catch(function (error) {
-      //   
-      //   console.log(error);
-      // });
-  },
-  getTopics(){
-
-    var vm = this;
-    axios.get('http://localhost:8087/api/topics/v1',{crossdomain: true} )
-    .then(function(response){
-
-      vm.topics = response.data;
-    }).catch( error =>{
-      
-        console.log('Errrrror:   '+error)
-    })
-  },
-
-  loadPageWithComments(index){
-    var vm = this;
-
-    axios.get('http://localhost:8087/api/topics/v1/'+vm.topics[index][0])
-    .then(function(response){
-
-      vm.comments = response.data;
-
-      alert(vm.comments);
-      console.log(vm.comments);
-    }).catch( error =>{
-      
-        console.log('Errrrror:   '+error)
-    })
-
-    
+    loadTopics(){
+      this.$router.push('/topics');
+    },  
+    addTopic(){
+      this.$router.push('/topics/create');
+    },  
   }
-
-
-}
+  
 }
 </script>
 
@@ -187,5 +97,15 @@ body {
 
 .highlight {
   color: blue;
+}
+
+.marginstyle{
+   border: 1px solid black;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 80px;
+  /* background-color: lightblue; */
+
 }
 </style>

@@ -1,5 +1,6 @@
 package com.example.demo2.controller;
 
+import com.example.demo2.TopicRepository;
 import com.example.demo2.model.Comment;
 import com.example.demo2.model.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,15 @@ public class TopicController {
 
     @Autowired
     EntityManager em;
+    private final TopicRepository topicRepository;
 
     static final String topicTableName = "topic";
     static final String commentTableName = "comment";
 
+    @Autowired
+    public TopicController(TopicRepository topicRepository) {
+        this.topicRepository = topicRepository;
+    }
 
 
     @RequestMapping(
@@ -43,6 +49,15 @@ public class TopicController {
         Query namedQuery = em.createNativeQuery("select * from " + commentTableName + " where topic_id = "+id );
 
         return namedQuery.getResultList();
+
+    }
+
+    @RequestMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            method = RequestMethod.POST
+    )
+    public void createTopic(@RequestBody Topic topic){
+        topicRepository.save(topic);
 
     }
 

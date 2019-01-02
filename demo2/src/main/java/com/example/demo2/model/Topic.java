@@ -10,7 +10,10 @@ public class Topic {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
+    @Column(nullable = false)
     private String title;
+
+    private String description;
 
     @OneToOne
     private Person person;
@@ -51,5 +54,13 @@ public class Topic {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/persons/v1")
 public class PersonController {
+
     private final PersonService personService;
     private final TopicRepository topicRepository;
 
