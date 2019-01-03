@@ -24,7 +24,7 @@ repositories {
 }
 
 bootJar {
-	baseName = 'gs-accessing-data-mysql'
+	baseName = 'gs-securing-web'
 	version =  '0.1.0'
 }
 
@@ -37,5 +37,5 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 	compile("org.springframework:spring-jdbc")
-//	compile "org.springframework.boot:spring-boot-starter-security"
+	compile "org.springframework.boot:spring-boot-starter-security"
 }

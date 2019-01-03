@@ -58,7 +58,6 @@ public class TopicController {
     )
     public void createTopic(@RequestBody Topic topic){
         topicRepository.save(topic);
-
     }
 
 }

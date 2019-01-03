@@ -7,6 +7,7 @@
             <li v-for="(comment,i) in comments">{{i}} ) {{ comment[1] }}</li>
         </ul>
         <button class="btn btn-primary" @click="addComment"> Add comment </button>
+        <button class="btn btn-primary" @click="topicList"> Back to Topic List </button>
 
         <router-view></router-view>
     </div>
@@ -37,8 +38,11 @@ export default {
             })
         },        
         addComment(){
-            this.$router.push( {path:'show/addcomment', query:{topicId:this.topicId}})
+            this.$router.push( {path:'show/addcomment', query:{topicId: this.$route.query.id}})
             
+        },
+        topicList(){
+            this.$router.push( {path:'/topics'});
         }
     },
     beforeMount: function(){

@@ -2,9 +2,11 @@
     <form  id="app"  @submit="saveComment">        
         Please Write Comment Clearly:<input type="text" v-model="comment">    
 
-        <p>
-        <input type="submit" value="Submit">
-        </p>
+        <hr>
+        <input class="btn btn-primary" type="submit" value="Submit">
+        <button class="btn btn-primary" @click="topicList">
+        Back to Topic List
+    </button>
 
     </form>
 </template>
@@ -25,15 +27,18 @@ export default {
             method: 'post',
             data: {
                 comment: vm.comment, 
-                topic_id: vm.topicId                  
+                topic_id: this.$route.query.topicId               
             }
             })      
         },
+        topicList(){
+            this.$router.push( {path:'/topics'});
+        }
 
     },
      beforeMount:function(){
         debugger;
-        this.topicId = this.$route.query.topicId;
+        // this.topicId = this.$route.query.topicId;
     },
 
 }

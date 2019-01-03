@@ -13,7 +13,9 @@ public class Comment {
 
     @ManyToOne
     private Person person;
+
     @ManyToOne
+    @JoinColumn(name = "topic_id")
     private Topic topic;
 
     public Comment() {

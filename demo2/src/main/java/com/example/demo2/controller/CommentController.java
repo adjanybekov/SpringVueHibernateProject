@@ -1,7 +1,10 @@
 package com.example.demo2.controller;
 
 import com.example.demo2.CommentRepository;
+import com.example.demo2.TopicRepository;
+import com.example.demo2.dto.CommentDTO;
 import com.example.demo2.model.Comment;
+import com.example.demo2.model.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +21,12 @@ public class CommentController {
     EntityManager em;
 
     private final CommentRepository commentRepository;
+    private final TopicRepository topicRepository;
 
     @Autowired
-    public CommentController(CommentRepository commentRepository) {
+    public CommentController(CommentRepository commentRepository, TopicRepository topicRepository) {
         this.commentRepository = commentRepository;
+        this.topicRepository = topicRepository;
     }
 
     static final String commentTableName = "comment";
@@ -43,8 +48,12 @@ public class CommentController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             method = RequestMethod.POST
     )
-    public void createTopic(@RequestBody Comment comment){
+    public void createTopic(@RequestBody CommentDTO commentDTO){
         //save comment relate with Topic
+        Comment comment = new Comment();
+        Topic topic = topicRepository.findById(commentDTO.getTopic_id()).get();
+        comment.setTopic(topic);
+        comment.setComment(commentDTO.getComment());
         commentRepository.save(comment);
 
     }

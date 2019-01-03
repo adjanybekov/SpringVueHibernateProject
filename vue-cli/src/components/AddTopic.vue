@@ -5,14 +5,19 @@
     title:<input type="text" v-model="title">
     description:<input type="text" v-model="description">    
 
-     <p>
-    <input
+
+<hr>
+    <input class="btn btn-primary"
       type="submit"
       value="Submit"
-    >
-  </p>
+    > <button class="btn btn-primary" @click="topicList">
+        Back to Topic List
+    </button>
+
 
     </form>
+   
+    
 </div>
     
 </template>
@@ -37,6 +42,9 @@ export default {
           }
         })      
       },
+      topicList(){
+            this.$router.push( {path:'/topics'});
+        }
     }
 }
 </script>
