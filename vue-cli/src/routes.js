@@ -18,6 +18,6 @@ export const routes = [
     },
     { path: '/topics/show', component: TopicWithComments
     },
-    { path: '/topics/create', component: AddTopic },
+    { path: '/create', component: AddTopic },
     { path: '/topics/show/addcomment', component: AddComment },
   ]

@@ -1,20 +1,18 @@
 <template>
 
     <div>
-         <div class="col-xs-12">    
+         
               <p> Hottest Topics of the day</p>
-              <ul>
-                <li v-for="(t,i) in topics" @click="loadPageWithComments(i)" class="list-group-item list-group-item-action">  {{i}}) {{ t[2] }} </li>
-              </ul>
 
-              <ul>              
-              </ul>              
-      </div>  
+                <topic v-for="t in topics" :topic="t"></topic>
+          
+
 
     </div>
 </template>
 
 <script>
+import Topic from './topic/Topic.vue';
 export default {
     data(){
         return{
@@ -41,31 +39,10 @@ export default {
     this.getTopics();
     
   },
-  methods:{
-    loadQuote:function(){
-      this.status="Loading...";
-      var vm = this;      
-      axios.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes')
-      .then(function(response){
-        vm.status = response.data[0];        
-      })
-      .catch(function(error){
-        vm.status='Error.. = ' + error;
-      })
-    },
-    getStudents:function(){       
-      var vm = this;       
-      axios.get('http://localhost:8090/api/v1/students')
-      .then(function(response){
-        
-        vm.studentData = response.data[0];
-
-      })
-      .catch(function(error){
-        
-        vm.studentData='Error.. = ' + error;
-      })
+  components:{
+    Topic
   },
+  methods:{
 
   getTopics(){
 

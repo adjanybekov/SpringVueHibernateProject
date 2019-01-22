@@ -1,35 +1,18 @@
 <template>
 
   <div id="app">
-     
-    <div class="container">
-        <div class="row marginstyle" >          
-          <div class="col-md-3">
-            <router-link to='/' class="navbar-brand" :active='true'>
-                        Home
-                      </router-link>
-          </div>
-         <div class="col-md-2">
-            <button class="btn btn-primary" @click="addTopic">
-              Add new Topic
-            </button>
-         </div>
-          
-          <!-- <div class="col-md-2">
-             <button class="btn btn-primary" @click="loadTopics">
-              List Fresh Topics
-            </button>
-          </div> -->
-        
-             
-      </div> 
-                <router-view></router-view>    
-      </div>     
+    
+    <div class="container">       
+       <navigation></navigation>        
+        <router-view></router-view>    
+    </div>     
        
   </div>
 </template>
 
 <script>
+import Navigation from './components/Navigation.vue';
+
 export default {
   name: 'app',
   data () {
@@ -44,6 +27,9 @@ export default {
     addTopic(){
       this.$router.push('/topics/create');
     },  
+  },
+  components:{
+    Navigation
   }
   
 }

@@ -4,8 +4,8 @@
 
         <hr>
         <input class="btn btn-primary" type="submit" value="Submit">
-        <button class="btn btn-primary" @click="topicList">
-        Back to Topic List
+        <button type="button" class="btn btn-primary" @click="loadPageWithComments">
+        Back to Comment List
     </button>
 
     </form>
@@ -15,30 +15,65 @@ export default {
     data(){
         return{
             comment:'',
-            topicId:''
+            topicId:'',
+            comments:[]
         }
     },
    
     methods:{
         saveComment:function(){
+            debugger;
         var vm = this;
-            axios({
-            url: 'http://localhost:8087/api/comment/v1',
-            method: 'post',
-            data: {
-                comment: vm.comment, 
-                topic_id: this.$route.query.topicId               
-            }
-            })      
-        },
-        topicList(){
-            this.$router.push( {path:'/topics'});
+        debugger;
+        var data =  {
+            comment: vm.comment,
+             topic_id: vm.topicId
         }
+        axios.post('http://localhost:8087/api/comment/v1',data)
+        .then(res=>console.log("Succeesssss"))
+        .catch( error =>{
+            
+                console.log('Errrrror in loadPage:   '+error)
+            });
+            // axios({
+            // url: 'http://localhost:8087/api/comment/v1',
+            // method: 'post',
+            // data: {
+            //     comment: vm.comment, 
+            //     topic_id: vm.topicId               
+            // }
+            // }).then( function(response){
+
+            // }
+
+
+            // )      
+        },
+       loadPageWithComments(){
+            var vm = this;
+            debugger;
+            axios.get('http://localhost:8087/api/topics/v1/'+vm.topicId)
+                .then(function(response){
+
+                vm.comments = response.data;
+
+                // load topics
+                                
+                debugger;
+                vm.$router.push({path:'/topics/show',query:{ topic: 'asfdasd', id: vm.topicId}});
+                // console.log(vm.comments);
+            }).catch( error =>{
+            
+                console.log('Errrrror in loadPage:   '+error)
+            })
+
+        
+    }
 
     },
      beforeMount:function(){
-        debugger;
-        // this.topicId = this.$route.query.topicId;
+    
+        this.topicId = this.$route.query.topicId;
     },
 
 }

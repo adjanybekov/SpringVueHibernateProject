@@ -1,24 +1,22 @@
 <template>
-<div>
+    <div>
     <form  id="app"  @submit="saveTopic">
 
-    title:<input type="text" v-model="title">
-    description:<input type="text" v-model="description">    
-
-
-<hr>
-    <input class="btn btn-primary"
-      type="submit"
-      value="Submit"
-    > <button class="btn btn-primary" @click="topicList">
-        Back to Topic List
-    </button>
-
-
-    </form>
-   
+        title:<input type="text" v-model="title">
+        description:<input type="text" v-model="description">    
+        <hr>
+        <input class="btn btn-primary"   type="submit"      value="Submit" > 
+        <button type="button" class="btn btn-primary" @click="topicList">
+            Back to Topic List
+        </button>
     
-</div>
+    </form>
+        
+    </div>
+    
+
+    
+
     
 </template>
 <script>
@@ -30,8 +28,13 @@ export default {
         }
     },
     methods:{
+         topicList(){
+             debugger;
+            this.$router.push( {path:'/topics'});
+        },
         
-    saveTopic:function(){
+    saveTopic(){
+        debugger;
       var vm = this;
         axios({
           url: 'http://localhost:8087/api/topics/v1',
@@ -42,9 +45,7 @@ export default {
           }
         })      
       },
-      topicList(){
-            this.$router.push( {path:'/topics'});
-        }
+     
     }
 }
 </script>
