@@ -48,7 +48,7 @@ public class CommentController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             method = RequestMethod.POST
     )
-    public void createTopic(@RequestBody CommentDTO commentDTO){
+    public void createComment(@RequestBody CommentDTO commentDTO){
         //save comment relate with Topic
         Comment comment = new Comment();
         Topic topic = topicRepository.findById(commentDTO.getTopic_id()).get();

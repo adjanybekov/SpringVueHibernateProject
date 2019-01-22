@@ -40,9 +40,9 @@ public class PersonController {
         return personService.getAllPersons();
     }
 
-    @PostMapping
-    public void createTopic(CreateTopicDTO topicDTO) {
-        Topic t = new Topic();
-        topicRepository.save(t);
-    }
+//    @PostMapping
+//    public void createTopic(CreateTopicDTO topicDTO) {
+//        Topic t = new Topic();
+//        topicRepository.save(t);
+//    }
 }
