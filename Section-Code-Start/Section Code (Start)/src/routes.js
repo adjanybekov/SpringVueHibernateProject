@@ -1,9 +1,11 @@
-import MainPageText from './components/MainPageText.vue';
-import Portfolio from './components/Portfolio.vue';
-import Stock from './components/Stock.vue';
+import Home from './components/Home.vue';
+import Portfolio from './components/portfolio/Portfolio.vue';
+
+import Stock from './components/stocks/Stock.vue';
+import Stocks from './components/stocks/Stocks.vue';
 
 export const routes = [
-    { path:'',component:MainPageText},
+    { path:'',component:Home},
     { path:'/portfolio', component:Portfolio},
-    { path:'/stock', component:Stock}
+    { path:'/stocks', component:Stocks},
 ];
